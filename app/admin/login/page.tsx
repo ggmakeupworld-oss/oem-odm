@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -10,7 +10,40 @@ export default function AdminLogin() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [checkingAuth , setCheckingAuth] = useState(false)
+ 
+  // Check if already logged in
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/auth/check', {
+          method: 'GET',
+          credentials: 'include',
+        })
 
+        if (res.ok) {
+          // Already logged in then redirect
+          router.replace('/admin/dashboard')
+        } else {
+          setCheckingAuth(false)
+        }
+      } catch (err) {
+        console.error('Auth check failed:', err)
+        setCheckingAuth(false)
+      }
+    }
+
+    checkAuth()
+  }, [router])
+
+  // Prevent rendering login form while checking
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Checking authentication...</p>
+      </div>
+    )
+  }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
