@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
@@ -16,6 +17,7 @@ const navLinks: Array<{ href: string; label: string; isAdmin?: boolean }> = [
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
@@ -122,19 +124,27 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <div ref={navRef} className="hidden items-center gap-8 md:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm uppercase tracking-widest transition-colors hover:text-primary ${
-                  link.isAdmin
-                    ? "ml-4 text-xs font-semibold px-3 py-1 rounded-full bg-slate-900 text-white hover:bg-slate-800 hover:text-white"
-                    : ""
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href || 
+                (link.href !== "/" && pathname.startsWith(link.href));
+              
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-sm uppercase tracking-widest transition-colors rounded-md px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-secondary ${
+                    link.isAdmin
+                      ? "ml-4 text-xs font-semibold px-3 py-1 rounded-full bg-slate-900 text-white hover:bg-slate-800 hover:text-white focus-visible:ring-offset-slate-900"
+                      : isActive
+                        ? "text-primary font-semibold"
+                        : "hover:text-primary"
+                  }`}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <ThemeToggle />
           </div>
 
@@ -161,21 +171,29 @@ export function Header() {
             ref={mobileMenuRef}
             className="mt-4 overflow-hidden border-t border-primary/20 pt-4 md:hidden"
           >
-            <div className="flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`text-sm uppercase tracking-widest transition-colors hover:text-primary ${
-                    link.isAdmin
-                      ? "text-xs font-semibold px-3 py-1 rounded-full bg-slate-900 text-white hover:bg-slate-800 hover:text-white inline-block w-fit"
-                      : ""
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+            <div className="flex flex-col gap-2">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href || 
+                  (link.href !== "/" && pathname.startsWith(link.href));
+                
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`text-sm uppercase tracking-widest transition-colors rounded-md px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-secondary ${
+                      link.isAdmin
+                        ? "text-xs font-semibold px-3 py-1 rounded-full bg-slate-900 text-white hover:bg-slate-800 hover:text-white inline-block w-fit focus-visible:ring-offset-slate-900"
+                        : isActive
+                          ? "text-primary font-semibold bg-primary/10"
+                          : "hover:text-primary hover:bg-primary/5"
+                    }`}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}
