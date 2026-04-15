@@ -114,23 +114,23 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="text-slate-600">Loading...</div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-muted-foreground">Loading...</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200">
+      <header className="bg-card border-b border-border">
         <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-          <h1 className="text-3xl font-serif font-bold text-slate-900">
+          <h1 className="text-3xl font-serif font-bold text-foreground">
             Admin Dashboard
           </h1>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition"
+            className="flex items-center gap-2 px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition"
           >
             <LogOut size={20} />
             Logout
@@ -143,13 +143,13 @@ export default function AdminDashboard() {
         {/* Add Product Section */}
         <div className="mb-8">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-serif font-bold text-slate-900">
+            <h2 className="text-2xl font-serif font-bold text-foreground">
               Products Management
             </h2>
             {!showForm && (
               <button
                 onClick={() => setShowForm(true)}
-                className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg transition"
+                className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg transition"
               >
                 <Plus size={20} />
                 Add Product
@@ -162,9 +162,9 @@ export default function AdminDashboard() {
               <ProductForm onSuccess={handleProductAdded} />
               <button
                 onClick={() => setShowForm(false)}
-                className="mt-4 text-slate-600 hover:text-slate-900 text-sm font-medium"
+                className="mt-4 text-muted-foreground hover:text-foreground text-sm font-medium"
               >
-                ← Cancel
+                &larr; Cancel
               </button>
             </div>
           )}
@@ -172,22 +172,22 @@ export default function AdminDashboard() {
 
         {/* Products List */}
         <div>
-          <h3 className="text-xl font-semibold text-slate-900 mb-4">
+          <h3 className="text-xl font-semibold text-foreground mb-4">
             Products ({products.length})
           </h3>
 
           {products.length === 0 ? (
-            <div className="bg-white border border-slate-200 rounded-lg p-8 text-center">
-              <p className="text-slate-600">No products added yet. Click "Add Product" to get started.</p>
+            <div className="bg-card border border-border rounded-lg p-8 text-center">
+              <p className="text-muted-foreground">No products added yet. Click &quot;Add Product&quot; to get started.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {products.map(product => (
                 <div
                   key={product._id}
-                  className="bg-white border border-slate-200 rounded-lg overflow-hidden hover:shadow-lg transition"
+                  className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition"
                 >
-                  <div className="relative w-full h-48 bg-slate-100">
+                  <div className="relative w-full h-48 bg-muted">
                     {product.image && (
                       <Image
                         src={product.image}
@@ -198,11 +198,11 @@ export default function AdminDashboard() {
                     )}
                   </div>
                   <div className="p-4">
-                    <h4 className="font-semibold text-slate-900 mb-1">{product.name}</h4>
-                    <p className="text-xs text-slate-500 mb-2">
+                    <h4 className="font-semibold text-foreground mb-1">{product.name}</h4>
+                    <p className="text-xs text-muted-foreground mb-2">
                       {product.category}
                     </p>
-                    <p className="text-sm text-slate-600 mb-3 line-clamp-2">
+                    <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                       {product.description}
                     </p>
                     {product.shades.length > 0 && (
@@ -210,25 +210,25 @@ export default function AdminDashboard() {
                         {product.shades.map((shade, idx) => (
                           <div
                             key={idx}
-                            className="flex items-center gap-1 text-xs bg-slate-100 px-2 py-1 rounded"
+                            className="flex items-center gap-1 text-xs bg-muted px-2 py-1 rounded"
                           >
                             <div
-                              className="w-3 h-3 rounded-full border border-slate-300"
+                              className="w-3 h-3 rounded-full border border-border"
                               style={{
                                 backgroundColor: product.colors[idx] || '#000000'
                               }}
                             />
-                            <span className="text-slate-700">{shade}</span>
+                            <span className="text-muted-foreground">{shade}</span>
                           </div>
                         ))}
                       </div>
                     )}
-                    <div className="pt-3 border-t border-slate-200">
-                      <p className="text-xs text-slate-500 mb-3">ID: {product.id}</p>
+                    <div className="pt-3 border-t border-border">
+                      <p className="text-xs text-muted-foreground mb-3">ID: {product._id}</p>
                       <div className="flex gap-2">
                         <button
                           onClick={() => setEditingProduct(product)}
-                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded text-sm font-medium transition"
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-accent/20 hover:bg-accent/30 text-accent-foreground rounded text-sm font-medium transition"
                         >
                           <Edit2 size={16} />
                           Edit
@@ -236,7 +236,7 @@ export default function AdminDashboard() {
                         <button
                           onClick={() => handleDeleteProduct(product._id)}
                           disabled={deletingId === product._id}
-                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-red-50 hover:bg-red-100 disabled:opacity-50 text-red-700 rounded text-sm font-medium transition"
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-destructive/10 hover:bg-destructive/20 disabled:opacity-50 text-destructive rounded text-sm font-medium transition"
                         >
                           <Trash2 size={16} />
                           {deletingId === product._id ? 'Deleting...' : 'Delete'}
