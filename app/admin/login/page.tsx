@@ -39,8 +39,8 @@ export default function AdminLogin() {
   // Prevent rendering login form while checking
   if (checkingAuth) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>Checking authentication...</p>
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <p className="text-foreground">Checking authentication...</p>
       </div>
     )
   }
@@ -79,23 +79,23 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-muted to-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-xl p-8">
-          <h1 className="text-3xl font-serif font-bold text-center text-slate-900 mb-2">
+        <div className="bg-card rounded-lg shadow-xl p-8 border border-border">
+          <h1 className="text-3xl font-serif font-bold text-center text-foreground mb-2">
             Admin Panel
           </h1>
-          <p className="text-center text-slate-600 mb-8">Sign in to manage products</p>
+          <p className="text-center text-muted-foreground mb-8">Sign in to manage products</p>
 
           {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-700 text-sm">{error}</p>
+            <div className="mb-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+              <p className="text-destructive text-sm">{error}</p>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="username" className="block text-sm font-medium text-foreground mb-1">
                 Username
               </label>
               <input
@@ -104,13 +104,13 @@ export default function AdminLogin() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter username"
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500"
+                className="w-full px-4 py-2 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground placeholder:text-muted-foreground"
                 disabled={loading}
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="password" className="block text-sm font-medium text-foreground mb-1">
                 Password
               </label>
               <input
@@ -119,7 +119,7 @@ export default function AdminLogin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password"
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500"
+                className="w-full px-4 py-2 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground placeholder:text-muted-foreground"
                 disabled={loading}
               />
             </div>
@@ -127,23 +127,23 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-2 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-slate-200">
-            <p className="text-xs text-slate-600 text-center">
+          <div className="mt-6 pt-6 border-t border-border">
+            <p className="text-xs text-muted-foreground text-center">
               Demo Credentials:<br />
-              Username: <span className="font-mono font-semibold">admin</span><br />
-              Password: <span className="font-mono font-semibold">admin</span>
+              Username: <span className="font-mono font-semibold text-foreground">admin</span><br />
+              Password: <span className="font-mono font-semibold text-foreground">admin</span>
             </p>
           </div>
 
           <div className="mt-6 text-center">
-            <Link href="/" className="text-sm text-slate-600 hover:text-slate-900">
-              ← Back to Store
+            <Link href="/" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              &larr; Back to Store
             </Link>
           </div>
         </div>

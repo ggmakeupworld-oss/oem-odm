@@ -82,7 +82,7 @@ export function EditProductModal({ product, onClose, onSuccess }: EditProductMod
       } else {
         setError('Failed to upload image')
       }
-    } catch (err) {
+    } catch {
       setError('Error uploading image')
     }
   }
@@ -117,21 +117,21 @@ export function EditProductModal({ product, onClose, onSuccess }: EditProductMod
       }
 
       onSuccess()
-    } catch (err) {
+    } catch {
       setError('An error occurred while updating the product')
       setLoading(false)
     }
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-card rounded-lg border border-border max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-slate-900">Edit Product</h2>
+        <div className="sticky top-0 bg-card border-b border-border px-6 py-4 flex justify-between items-center">
+          <h2 className="text-2xl font-bold text-foreground">Edit Product</h2>
           <button
             onClick={onClose}
-            className="text-slate-500 hover:text-slate-700"
+            className="text-muted-foreground hover:text-foreground transition-colors"
           >
             <X size={24} />
           </button>
@@ -140,19 +140,19 @@ export function EditProductModal({ product, onClose, onSuccess }: EditProductMod
         {/* Content */}
         <form onSubmit={handleSubmit} className="p-6">
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+            <div className="mb-4 p-3 bg-destructive/10 border border-destructive/20 text-destructive rounded-lg text-sm">
               {error}
             </div>
           )}
 
           {/* Image Section */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-slate-900 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Product Image
             </label>
             <div className="flex gap-4">
               {image && (
-                <div className="relative w-20 h-20 bg-slate-100 rounded-lg overflow-hidden">
+                <div className="relative w-20 h-20 bg-muted rounded-lg overflow-hidden">
                   <Image
                     src={image}
                     alt="Product"
@@ -165,14 +165,14 @@ export function EditProductModal({ product, onClose, onSuccess }: EditProductMod
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
-                className="flex-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200"
+                className="flex-1 block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-muted file:text-foreground hover:file:bg-muted/80"
               />
             </div>
           </div>
 
           {/* Product Name */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-slate-900 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Product Name
             </label>
             <input
@@ -180,21 +180,21 @@ export function EditProductModal({ product, onClose, onSuccess }: EditProductMod
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-slate-900"
+              className="w-full px-4 py-2 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
               required
             />
           </div>
 
           {/* Category */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-slate-900 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Category
             </label>
             <select
               name="category"
               value={formData.category}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-slate-900"
+              className="w-full px-4 py-2 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
               required
             >
               <option value="">Select a category</option>
@@ -206,7 +206,7 @@ export function EditProductModal({ product, onClose, onSuccess }: EditProductMod
 
           {/* Description */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-slate-900 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Description
             </label>
             <textarea
@@ -214,7 +214,7 @@ export function EditProductModal({ product, onClose, onSuccess }: EditProductMod
               value={formData.description}
               onChange={handleInputChange}
               rows={4}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-slate-900"
+              className="w-full px-4 py-2 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
               required
             />
           </div>
@@ -222,13 +222,13 @@ export function EditProductModal({ product, onClose, onSuccess }: EditProductMod
           {/* Shades */}
           <div className="mb-6">
             <div className="flex justify-between items-center mb-3">
-              <label className="block text-sm font-medium text-slate-900">
+              <label className="block text-sm font-medium text-foreground">
                 Shades
               </label>
               <button
                 type="button"
                 onClick={handleAddShade}
-                className="text-sm text-slate-600 hover:text-slate-900 font-medium"
+                className="text-sm text-muted-foreground hover:text-foreground font-medium transition-colors"
               >
                 + Add Shade
               </button>
@@ -241,18 +241,18 @@ export function EditProductModal({ product, onClose, onSuccess }: EditProductMod
                     value={shade}
                     onChange={(e) => handleShadeChange(index, e.target.value)}
                     placeholder="Shade name"
-                    className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-slate-900 text-sm"
+                    className="flex-1 px-4 py-2 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground text-sm placeholder:text-muted-foreground"
                   />
                   <input
                     type="color"
                     value={colors[index] || '#000000'}
                     onChange={(e) => handleColorChange(index, e.target.value)}
-                    className="w-12 h-10 border border-slate-300 rounded-lg cursor-pointer"
+                    className="w-12 h-10 border border-border rounded-lg cursor-pointer"
                   />
                   <button
                     type="button"
                     onClick={() => handleRemoveShade(index)}
-                    className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition text-sm font-medium"
+                    className="px-3 py-2 text-destructive hover:bg-destructive/10 rounded-lg transition text-sm font-medium"
                   >
                     Remove
                   </button>
@@ -266,14 +266,14 @@ export function EditProductModal({ product, onClose, onSuccess }: EditProductMod
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2 border border-slate-300 text-slate-900 rounded-lg hover:bg-slate-50 transition font-medium"
+              className="px-6 py-2 border border-border text-foreground rounded-lg hover:bg-muted transition font-medium"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white rounded-lg transition font-medium"
+              className="px-6 py-2 bg-primary hover:bg-primary/90 disabled:opacity-50 text-primary-foreground rounded-lg transition font-medium"
             >
               {loading ? 'Updating...' : 'Update Product'}
             </button>
